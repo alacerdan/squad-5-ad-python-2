@@ -1,11 +1,22 @@
-from django.urls import path, include
-from .views import ListComissions, ListComissionDetail, ListSellers, ListSellersDetail
+from django.urls import path
+from .views import (ListComissions, ListComissionDetail,
+                    ListSellers, ListSellersDetail,
+                    ListSales, ListSalesDetail)
 
 urlpatterns = [
-    path('listComissions/', ListComissions.as_view(), name='list_comissions'),
-    path('listComissionsDetail/<int:pk>', ListComissionDetail.as_view(),
-         name='list_comissions_detail'),
-    path('listSellers/', ListSellers.as_view(), name='list_sellers'),
-    path('listSellersDetail/<int:pk>', ListSellersDetail.as_view(),
-         name='list_sellers_detail'),
+     # Comission
+     path('listComissions/', ListComissions.as_view(), name='list_comissions'),
+     path('listComissionsDetail/<int:pk>',
+          ListComissionDetail.as_view(),
+          name='list_comissions_detail'),
+     # Seller
+     path('listSellers/', ListSellers.as_view(), name='list_sellers'),
+     path('listSellersDetail/<int:pk>',
+          ListSellersDetail.as_view(),
+          name='list_sellers_detail'),
+     # Sales
+     path('listSales/', ListSales.as_view(), name='list_sales'),
+     path('listSalesDetail/<int:pk>',
+          ListSalesDetail.as_view(),
+          name='list_sales_detail'),
 ]

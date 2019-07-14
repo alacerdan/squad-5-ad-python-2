@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Comissions, Sellers
+from .models import Comissions, Sellers, Sales
 
 
 class ComissionsSerializer(serializers.ModelSerializer):
@@ -24,3 +24,10 @@ class SellersSerializer(serializers.ModelSerializer):
         model = Sellers
         fields = ('id', 'name', 'address', 'phone', 'age',
                   'email', 'cpf', 'comission')
+
+
+class SalesSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Sales
+        fields = '__all__'

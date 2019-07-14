@@ -35,3 +35,20 @@ class Sellers(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Sales(models.Model):
+
+    seller_id = models.IntegerField()
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    month = models.IntegerField()
+    comission = models.DecimalField(max_digits=10, decimal_places=2)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Venda"
+        verbose_name_plural = "Vendas"
+
+    def __str__(self):
+        return f"id_seller: {self.seller}; amount: {self.amount}"
