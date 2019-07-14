@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import (ListComissions, ListComissionDetail,
                     ListSellers, ListSellersDetail,
-                    ListSales, ListSalesDetail)
+                    ListSales, ListSalesDetail, SalesMonth)
 
 urlpatterns = [
      # Comission
@@ -19,4 +19,7 @@ urlpatterns = [
      path('listSalesDetail/<int:pk>',
           ListSalesDetail.as_view(),
           name='list_sales_detail'),
+     # Sales Month
+     path('sales_month/', SalesMonth.as_view(), name='sales_month')
+
 ]

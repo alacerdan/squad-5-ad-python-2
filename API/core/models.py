@@ -51,4 +51,4 @@ class Sales(models.Model):
         verbose_name_plural = "Vendas"
 
     def __str__(self):
-        return f"id_seller: {self.seller}; amount: {self.amount}"
+        return str(self.amount)

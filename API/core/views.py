@@ -1,11 +1,13 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from django.http import Http404
 from .models import Comissions, Sellers, Sales
 from .serializers import (ComissionsSerializer,
                           SellersSerializer,
                           SalesSerializer)
 from rest_framework import status
-from django.http import Http404
+import numpy as np
+import json
 
 
 class ListComissions(APIView):
@@ -105,6 +107,36 @@ class ListSales(APIView):
             content = serializer.save()
             return Response({"id": content.id}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class SalesMonth(APIView):
+
+    def post(self, request):
+        month = request.data['month']
+        seller_id = request.data['seller_id']
+        seller = Sellers.objects.get(pk=seller_id)
+
+        # Calculando a quantidade em valor das vendas realizadas pelo vendedor
+        sales = Sales.objects.filter(seller_id=seller_id, month=month)
+        print(sales)
+        amount = [float(sale['amount']) for sale in sales.values()]
+        amount = np.array(amount).sum()
+        print(amount)
+        min_value = seller.comission.min_value
+        lower = seller.comission.lower_percentage
+        upper = seller.comission.upper_percentage
+
+        if amount < min_value:
+            comission = amount*lower/100
+        else:
+            comission = amount*upper/100
+
+        data = {'seller_id': seller_id,
+                'comission': comission,
+                'amount': amount}
+        print(data)
+
+        return Response(json.dumps(data))
 
 
 class ListSalesDetail(APIView):
